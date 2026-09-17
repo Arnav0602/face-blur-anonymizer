@@ -80,6 +80,8 @@ Press `q` to stop early if you're using `--preview` (see below).
 |-------------------|----------------------------------------------------------------------|---------|
 | `--blur-strength` | Gaussian blur kernel size (higher = more blurred). Must be odd.    | 99      |
 | `--min-neighbors` | Higher values reduce false-positive detections.                    | 5       |
+| `--grace-period`  | Frames to keep blurring a face after detection briefly misses it (prevents flicker). | 8 |
+| `--no-smoothing`  | Disable temporal smoothing and use raw per-frame detections.        | off     |
 | `--preview`       | Show a live preview window while processing (requires a display).  | off     |
 
 Example with custom settings:
