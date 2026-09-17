@@ -6,12 +6,11 @@ process a video file or a live webcam feed.
 
 ## How It Works
 
-1. Each frame of the video is read using OpenCV.
-2. A pre-trained Haar Cascade classifier scans the frame (converted
-   to grayscale) for regions matching facial patterns.
-3. A strong Gaussian blur is applied to each detected face region,
-   while the rest of the frame is left untouched.
-4. The processed frames are written to a new output video file.
+1.Each frame of the video is read using OpenCV.
+2.A pre-trained Haar Cascade classifier scans the frame (converted to grayscale) for regions matching facial patterns.
+3.A temporal smoothing step ("tracker") remembers recently-seen face positions for a short grace period, so a face that briefly fails to be detected on one or two frames doesn't cause the blur to flicker on and off.
+4.A strong Gaussian blur is applied to each detected (or recently tracked) face region, while the rest of the frame is left untouched.
+5.The processed frames are written to a new output video file.
 
 ## Project Structure
 
@@ -21,6 +20,7 @@ face-blur-anonymizer/
 ├── requirements.txt
 ├── src/
 │   ├── detector.py    # Face detection logic (Haar Cascade)
+│   ├── tracker.py      # Temporal smoothing to prevent blur flicker
 │   ├── blur.py         # Applies Gaussian blur to detected regions
 │   └── main.py         # CLI entry point
 ├── sample_input/       # Place input videos here
@@ -37,8 +37,8 @@ face-blur-anonymizer/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/<your-username>/<your-repo-name>.git
-   cd <your-repo-name>
+   git clone https://github.com/<uditraghuvanshi99811>/<face-blur-anonymizer>.git
+   cd <face-blur-anonymizer>
    ```
 
 2. **(Recommended) Create a virtual environment**
@@ -103,15 +103,9 @@ The processed video is saved at the path given by `--output`.
 
 ## Notes & Limitations
 
-- Detection uses OpenCV's built-in `haarcascade_frontalface_default.xml`
-  classifier, which works best on faces that are reasonably front-facing
-  and well-lit. Extreme angles, heavy occlusion, or poor lighting can
-  reduce detection accuracy.
-- `--preview` requires a graphical display and will not work in a
-  headless terminal/server environment — omit it for pure CLI use.
-- The tool does not require internet access; the Haar Cascade file
-  ships with the `opencv-python` package.
-
+Detection uses OpenCV's built-in haarcascade_frontalface_default.xml classifier, which works best on faces that are reasonably front-facing and well-lit. Extreme angles, heavy occlusion, or poor lighting can reduce detection accuracy.
+--preview requires a graphical display and will not work in a headless terminal/server environment — omit it for pure CLI use.
+The tool does not require internet access; the Haar Cascade file ships with the opencv-python package.
 ## License
 
 This project was built for academic coursework submission.
