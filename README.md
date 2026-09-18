@@ -1,8 +1,8 @@
 # Face Blur Anonymizer
 
-##Name: Arnav Sharma 
-***
-##Reg Number: 24BAI10576
+#Name: Arnav Sharma 
+```
+#Reg Number: 24BAI10576
 
 A command-line tool that automatically detects and blurs human faces
 in a video, producing an anonymized copy of the footage. It can
